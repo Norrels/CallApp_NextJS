@@ -6,7 +6,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 
-export default function Register() {
+export default function ConnectCalender() {
     const session = useSession()
     const router = useRouter()
 
@@ -58,7 +58,7 @@ export default function Register() {
                     )
                 }
                 <Button type="submit" disabled={!isSignedIn}>
-                    Proxímo passo
+                    Próximo passo
                     <ArrowRight />
                 </Button>
 

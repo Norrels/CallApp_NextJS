@@ -80,7 +80,7 @@ export default function Register() {
                 </label>
 
                 <Button type="submit">
-                    Proxímo passo
+                    Próximo passo
                     <ArrowRight />
                 </Button>
             </Form>
