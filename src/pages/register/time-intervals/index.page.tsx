@@ -3,6 +3,7 @@ import { Heading, Text, MultiStep, Checkbox, TextInput, Button } from "@ignite-u
 import { ArrowRight } from "phosphor-react";
 import { useFieldArray, useForm, Controller } from "react-hook-form";
 import { z } from "zod";
+import { api } from "../../../lib/axios";
 import { convertTimeStringToMinutes } from "../../../utils/conver-time-string-to-minutes";
 import { getWeekDays } from "../../../utils/get-week-days";
 import { Container, Header } from "../style";
@@ -16,27 +17,27 @@ const TimeIntervalsFormSchema = z.object({
         endTime: z.string(),
     })
     ).length(7)
-    .transform((intervals) => intervals.filter((intervals) => intervals.enabled))
-    .refine((intervals) => intervals.length > 0, {
-        message: 'Você precisa selecionar pelo menos um dia da semana!'
-    })
-    .transform((intervals) => {
-      return intervals.map((interval) => {
-        return {
-            weekDay: interval.weekday,
-            startTimeInMinutes: convertTimeStringToMinutes(interval.startTime),
-            endTimeInMinutes: convertTimeStringToMinutes(interval.endTime),
-        }
-      })  
-    })
-    .refine((intervals) => {
-        return intervals.every(
-            (interval) => 
-            interval.endTimeInMinutes - 60 >= interval.startTimeInMinutes
-        )
-    }, {
-        message: 'O horário de término deve ser pelo menos 1h distante do início'
-    })
+        .transform((intervals) => intervals.filter((intervals) => intervals.enabled))
+        .refine((intervals) => intervals.length > 0, {
+            message: 'Você precisa selecionar pelo menos um dia da semana!'
+        })
+        .transform((intervals) => {
+            return intervals.map((interval) => {
+                return {
+                    weekDay: interval.weekday,
+                    startTimeInMinutes: convertTimeStringToMinutes(interval.startTime),
+                    endTimeInMinutes: convertTimeStringToMinutes(interval.endTime),
+                }
+            })
+        })
+        .refine((intervals) => {
+            return intervals.every(
+                (interval) =>
+                    interval.endTimeInMinutes - 60 >= interval.startTimeInMinutes
+            )
+        }, {
+            message: 'O horário de término deve ser pelo menos 1h distante do início'
+        })
 })
 
 
@@ -77,8 +78,11 @@ export default function TimeIntervals() {
 
 
     async function handleSetTimeIntervals(data: any) {
-        const formData = data as TimeIntervalsFormDataOutput
-        console.log(formData)
+        const { intervals } = data as TimeIntervalsFormDataOutput
+
+        await api.post('/users/time-intervals', {
+            intervals
+        })
     }
 
     return (
