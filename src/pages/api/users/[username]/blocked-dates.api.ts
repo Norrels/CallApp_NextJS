@@ -43,7 +43,7 @@ export default async function handle(
   // Aqui eu só retorno os que não estão na array de cima
   const blockedWeekDays = [0, 1, 2, 3, 4, 5, 6].filter((weekDay) => {
     return !availableWeekDays.some(
-      (availableWeekDay) => availableWeekDay.week_day == weekDay,
+      (availableWeekDay) => availableWeekDay.week_day === weekDay,
     )
   })
 
