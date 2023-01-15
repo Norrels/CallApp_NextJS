@@ -11,10 +11,8 @@ globalStyles()
 
 export default function App({
   Component,
-  pageProps: {
-    session,
-    ...pageProps
-  } }: AppProps) {
+  pageProps: { session, ...pageProps },
+}: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <SessionProvider session={session}>
@@ -23,12 +21,11 @@ export default function App({
             type: 'website',
             locale: 'pt_BR',
             url: 'https://ignite-call.norrels.com.br',
-            siteName: "Ignite Call"       
+            siteName: 'Ignite Call',
           }}
         />
         <Component {...pageProps} />
       </SessionProvider>
     </QueryClientProvider>
-
   )
 }
