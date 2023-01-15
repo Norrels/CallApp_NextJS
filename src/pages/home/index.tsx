@@ -4,23 +4,33 @@ import { Container, Hero, Preview } from './style'
 
 import previewImage from '../../assets/preview.png'
 import { ClaimUsernameForm } from './ClaimUsernameForm'
+import { NextSeo } from 'next-seo'
 
 export default function Home() {
     return (
-        <Container>
-            <Hero>
-                <Heading as='h1' size="4xl">Agendamento descomplicado</Heading>
-                <Text size='xl'>Conecte seu calendário e permita que as pessoas marquem agendamentos no seu tempo livre.</Text>
-                <ClaimUsernameForm/>
-            </Hero>
-            <Preview>
-                <Image 
-                    src={previewImage}
-                    quality={100}
-                    priority
-                    alt="Calendário simbolizando aplicação em funcionamento"
-                />
-            </Preview>
-        </Container>
+        <>
+            <NextSeo
+                title="Descomplique sua agenda | Ignite Call"
+                description="Conecte seu calendário e permita que as pessoas marquem agendamentos no seu tempo livre"
+            />
+
+            <Container>
+                <Hero>
+                    <Heading as='h1' size="4xl">Agendamento descomplicado</Heading>
+                    <Text size='xl'>Conecte seu calendário e permita que as pessoas marquem agendamentos no seu tempo livre.</Text>
+                    <ClaimUsernameForm />
+                </Hero>
+                <Preview>
+                    <Image
+                        src={previewImage}
+                        quality={100}
+                        priority
+                        alt="Calendário simbolizando aplicação em funcionamento"
+                    />
+                </Preview>
+            </Container>
+
+        </>
+
     )
 }

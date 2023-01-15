@@ -1,5 +1,7 @@
 import { Avatar, Heading, Text } from "@ignite-ui/react";
 import { GetStaticPaths, GetStaticProps } from "next";
+import { NextSeo } from "next-seo";
+
 import { prisma } from "../../../lib/prisma";
 import { ScheduleForm } from "./ScheduleForm";
 import { Container, UserHeader } from "./style";
@@ -21,15 +23,20 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export default function Schedule({ user }: SchedulerProps) {
     return (
-        <Container>
-            <UserHeader>
-                <Avatar src={user.avatarUrl} />
-                <Heading>{user.name}</Heading>
-                <Text>{user.bio}</Text>
-            </UserHeader>
+        <>
+            <NextSeo title={`Agenda com ${user.name} | Ignite Call`}/>
 
-            <ScheduleForm/>
-        </Container>
+            <Container>
+                <UserHeader>
+                    <Avatar src={user.avatarUrl} />
+                    <Heading>{user.name}</Heading>
+                    <Text>{user.bio}</Text>
+                </UserHeader>
+
+                <ScheduleForm />
+            </Container>
+        </>
+
     )
 }
 
@@ -40,8 +47,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         where: { username: username }
     })
 
-    if(!user) {
-        return{
+    if (!user) {
+        return {
             notFound: true,
         }
     }
